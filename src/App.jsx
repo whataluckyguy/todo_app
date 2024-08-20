@@ -9,6 +9,7 @@ import {
   Fab,
   CssBaseline,
   styled,
+  colors,
 } from "@mui/material";
 import "./App.css";
 import { useLayoutEffect, useState } from "react";
@@ -18,10 +19,12 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 const AnimatedTab = styled(Tab)(({ theme, isActive }) => ({
+  "&.Mui-selected": { color: "white" },
   transition: "background-color 0.3s ease",
-  backgroundColor: isActive ? "blanchedalmond" : "transparent",
+  backgroundColor: isActive ? "#444cf7" : "transparent",
   "&:hover": {
-    backgroundColor: "blanchedalmond",
+    backgroundColor: "#444cf7",
+    color: "white",
   },
 }));
 
@@ -112,18 +115,27 @@ function App() {
             <Tab label="Completed" sx={{ borderRadius: 10, width: "20%" }} /> */}
           </Tabs>
         </Box>
-        <Paper className="todos" elevation={3}>
+        <Paper
+          className="todos"
+          elevation={3}
+          sx={{ borderRadius: 4, marginTop: 1 }}
+        >
           {list.map((item) => (
             <Todo key={item.id} todo={item.todo} />
           ))}
         </Paper>
         <CssBaseline />
-        <Box className="input">
+        <Box className="input" sx={{ marginTop: 1 }}>
           <TextField
             id="outlined-basic"
             label="What's on your mind?"
             variant="outlined"
             sx={{ width: "85%" }}
+            InputProps={{
+              style: {
+                borderRadius: "20px",
+              },
+            }}
           />
           <Fab>
             <Add />
