@@ -8,6 +8,7 @@ import {
   TextField,
   Fab,
   CssBaseline,
+  styled,
 } from "@mui/material";
 import "./App.css";
 import { useLayoutEffect, useState } from "react";
@@ -16,13 +17,22 @@ import Todo from "./Todo";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
+const AnimatedTab = styled(Tab)(({ theme, isActive }) => ({
+  transition: "background-color 0.3s ease",
+  backgroundColor: isActive ? "blanchedalmond" : "transparent",
+  "&:hover": {
+    backgroundColor: "blanchedalmond",
+  },
+}));
+
 function App() {
-  const [value, setValue] = useState(0);
+  // const [value, setValue] = useState(0);
   // const list = useSelector((state) => state.);
   const [list, setList] = useState([]);
+  const [activeTab, setActiveTab] = useState(0);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setActiveTab(newValue);
   };
 
   useLayoutEffect(() => {
@@ -54,8 +64,43 @@ function App() {
           To-Do List
         </Typography>
         <Box className="category">
-          <Tabs value={value} onChange={handleChange} centered>
-            <Tab
+          <Tabs
+            value={activeTab}
+            onChange={handleChange}
+            centered
+            TabIndicatorProps={{
+              style: { display: "none" },
+            }}
+          >
+            <AnimatedTab
+              isActive={activeTab === 0}
+              label="All"
+              sx={{
+                // backgroundColor: "blanchedalmond",
+                borderRadius: 10,
+                width: "20%",
+              }}
+            />
+            <AnimatedTab
+              isActive={activeTab === 1}
+              label="Pending"
+              sx={{
+                // backgroundColor: "blanchedalmond",
+                borderRadius: 10,
+                width: "20%",
+              }}
+            />
+            <AnimatedTab
+              isActive={activeTab === 2}
+              label="Completed"
+              sx={{
+                // backgroundColor: "blanchedalmond",
+                borderRadius: 10,
+                width: "20%",
+              }}
+            />
+
+            {/* <Tab
               label="All"
               sx={{
                 backgroundColor: "blanchedalmond",
@@ -64,7 +109,7 @@ function App() {
               }}
             />
             <Tab label="Pending" sx={{ borderRadius: 10, width: "20%" }} />
-            <Tab label="Completed" sx={{ borderRadius: 10, width: "20%" }} />
+            <Tab label="Completed" sx={{ borderRadius: 10, width: "20%" }} /> */}
           </Tabs>
         </Box>
         <Paper className="todos" elevation={3}>

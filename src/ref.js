@@ -17,7 +17,7 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-function Todo() {
+function TodoApp() {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
   const [editingIndex, setEditingIndex] = useState(null);
@@ -149,4 +149,4 @@ function Todo() {
   );
 }
 
-export default Todo;
+export default TodoApp;
