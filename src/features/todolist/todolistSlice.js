@@ -5,7 +5,7 @@ export const todolistSlice = createSlice({
   name: "todoList",
   initialState: {
     todos: [],
-    status,
+    // status,
   },
   reducers: {},
 });

@@ -19,15 +19,16 @@ import { useSelector } from "react-redux";
 function App() {
   const [value, setValue] = useState(0);
   // const list = useSelector((state) => state.);
+  const [list, setList] = useState([]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   useLayoutEffect(() => {
-    // axios
-    //   .get("https://dummyjson.com/todos")
-    //   .then((response) => setList(response.data.todos));
+    axios
+      .get("https://dummyjson.com/todos")
+      .then((response) => setList(response.data.todos));
     // console.log(list);
   }, []);
 
@@ -35,9 +36,9 @@ function App() {
     <Box className="app">
       <Container
         maxWidth="sm"
+        className="appContainer"
         sx={{
-          backgroundColor: "white",
-          height: "100%",
+          height: "100vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-evenly",
@@ -48,33 +49,31 @@ function App() {
           gutterBottom
           textAlign="center"
           fontWeight="bold"
+          className="appName"
         >
           To-Do List
         </Typography>
         <Box className="category">
           <Tabs value={value} onChange={handleChange} centered>
-            <Tab label="All" />
-            <Tab label="Pending" />
-            <Tab label="Completed" />
+            <Tab
+              label="All"
+              sx={{
+                backgroundColor: "blanchedalmond",
+                borderRadius: 10,
+                width: "20%",
+              }}
+            />
+            <Tab label="Pending" sx={{ borderRadius: 10, width: "20%" }} />
+            <Tab label="Completed" sx={{ borderRadius: 10, width: "20%" }} />
           </Tabs>
         </Box>
-        <Paper
-          elevation={3}
-          sx={{ height: "75%", padding: 2, overflowY: "scroll" }}
-        >
-          {/* {list.map((item) => (
+        <Paper className="todos" elevation={3}>
+          {list.map((item) => (
             <Todo key={item.id} todo={item.todo} />
-          ))} */}
+          ))}
         </Paper>
         <CssBaseline />
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            justifyItems: "center",
-          }}
-        >
+        <Box className="input">
           <TextField
             id="outlined-basic"
             label="What's on your mind?"
