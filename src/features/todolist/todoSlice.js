@@ -58,17 +58,24 @@ export const todoSlice = createSlice({
   },
   reducers: {
     updateLocalTodo: (state, action) => {
-      const { id, todo, completed } = action.payload;
+      const { index, todo, completed } = action.payload;
       console.log("payload:", action.payload);
-      const index = state.todoList.findIndex((todo) => todo.id === id);
+      // const index = index;
+      // const index = state.todoList.findIndex((todo) => todo.id === id);
       if (index !== -1) {
         state.todoList[index] = { ...state.todoList[index], todo, completed };
       }
     },
     deleteLocalTodo: (state, action) => {
-      state.todoList = state.todoList.filter(
-        (todo) => todo.id !== action.payload
-      );
+      // state.todoList = state.todoList.filter(
+      //   (todo) => todo.id !== action.payload
+      // );
+      const index = action.payload;
+      if (index >= 0 && index < state.todoList.length) {
+        state.todoList.splice(index, 1);
+      } else {
+        console.error("Index out of bounds:", index);
+      }
     },
   },
   extraReducers: (builder) => {

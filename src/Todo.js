@@ -24,7 +24,7 @@ import { useDispatch } from "react-redux";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-const Todo = ({ todo, todoID, check }) => {
+const Todo = ({ todo, todoID, check, index }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
@@ -60,7 +60,7 @@ const Todo = ({ todo, todoID, check }) => {
               console.log("updating local");
               dispatch(
                 updateLocalTodo({
-                  id: todoID,
+                  index: index,
                   completed: !check,
                   todo: todo,
                 })
@@ -89,7 +89,7 @@ const Todo = ({ todo, todoID, check }) => {
                 console.log("updating local");
                 dispatch(
                   updateLocalTodo({
-                    id: todoID,
+                    index: index,
                     todo: data,
                     completed: check,
                   })
@@ -140,7 +140,7 @@ const Todo = ({ todo, todoID, check }) => {
         <IconButton
           onClick={() => {
             if (todoID == 255) {
-              dispatch(deleteLocalTodo(255));
+              dispatch(deleteLocalTodo(index));
             } else {
               dispatch(deleteTodo(todoID));
             }

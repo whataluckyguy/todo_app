@@ -189,12 +189,13 @@ function App() {
             elevation={3}
             sx={{ borderRadius: 4, marginTop: 1 }}
           >
-            {todoList.map((item) => (
+            {todoList.map((item, index) => (
               <Todo
-                key={item.id}
+                key={index}
                 todoID={item.id}
                 todo={item.todo}
                 check={item.completed}
+                index={index}
               />
             ))}
           </Paper>
@@ -207,12 +208,13 @@ function App() {
           >
             {todoList
               .filter((item) => !item.completed)
-              .map((item) => (
+              .map((item, index) => (
                 <Todo
-                  key={item.id}
+                  key={index}
                   todoID={item.id}
                   todo={item.todo}
                   check={item.completed}
+                  index={index}
                 />
               ))}
           </Paper>
@@ -225,12 +227,13 @@ function App() {
           >
             {todoList
               .filter((item) => item.completed)
-              .map((item) => (
+              .map((item, index) => (
                 <Todo
-                  key={item.id}
+                  key={index}
                   todoID={item.id}
                   todo={item.todo}
                   check={item.completed}
+                  index={index}
                 />
               ))}
           </Paper>
