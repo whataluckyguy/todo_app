@@ -14,7 +14,12 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { deleteTodo, updateTodo } from "./features/todolist/todoSlice";
+import {
+  deleteLocalTodo,
+  deleteTodo,
+  updateLocalTodo,
+  updateTodo,
+} from "./features/todolist/todoSlice";
 import { useDispatch } from "react-redux";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -50,9 +55,22 @@ const Todo = ({ todo, todoID, check }) => {
             color: "#444cf7",
           }}
           checked={check}
-          onChange={() =>
-            dispatch(updateTodo({ id: todoID, todo: todo, completed: !check }))
-          }
+          onChange={() => {
+            if (todoID == 255) {
+              console.log("updating local");
+              dispatch(
+                updateLocalTodo({
+                  id: todoID,
+                  completed: !check,
+                  todo: todo,
+                })
+              );
+            } else {
+              dispatch(
+                updateTodo({ id: todoID, todo: todo, completed: !check })
+              );
+            }
+          }}
         />
         <Typography>{todo}</Typography>
         <Dialog
@@ -66,7 +84,20 @@ const Todo = ({ todo, todoID, check }) => {
               const formJson = Object.fromEntries(formData.entries());
               const data = formJson.task;
               console.log(data);
-              dispatch(updateTodo({ id: todoID, todo: data }));
+              console.log(todoID);
+              if (todoID == 255) {
+                console.log("updating local");
+                dispatch(
+                  updateLocalTodo({
+                    id: todoID,
+                    todo: data,
+                    completed: check,
+                  })
+                );
+              } else {
+                dispatch(updateTodo({ id: todoID, todo: data }));
+              }
+
               handleOpen();
             },
           }}
@@ -106,7 +137,15 @@ const Todo = ({ todo, todoID, check }) => {
         <IconButton onClick={handleOpen}>
           <Edit />
         </IconButton>
-        <IconButton onClick={() => dispatch(deleteTodo(todoID))}>
+        <IconButton
+          onClick={() => {
+            if (todoID == 255) {
+              dispatch(deleteLocalTodo(255));
+            } else {
+              dispatch(deleteTodo(todoID));
+            }
+          }}
+        >
           <Delete />
         </IconButton>
       </Box>

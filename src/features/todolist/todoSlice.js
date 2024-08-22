@@ -29,6 +29,7 @@ export const updateTodo = createAsyncThunk(
         },
       }
     );
+    console.log(id);
     return response.data;
   }
 );
@@ -51,10 +52,25 @@ export const todoSlice = createSlice({
   name: "todo",
   initialState: {
     todoList: [],
+    local: 255,
     status: "idle",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    updateLocalTodo: (state, action) => {
+      const { id, todo, completed } = action.payload;
+      console.log("payload:", action.payload);
+      const index = state.todoList.findIndex((todo) => todo.id === id);
+      if (index !== -1) {
+        state.todoList[index] = { ...state.todoList[index], todo, completed };
+      }
+    },
+    deleteLocalTodo: (state, action) => {
+      state.todoList = state.todoList.filter(
+        (todo) => todo.id !== action.payload
+      );
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTodoList.pending, (state) => {
@@ -110,5 +126,7 @@ export const todoSlice = createSlice({
       });
   },
 });
+
+export const { updateLocalTodo, deleteLocalTodo } = todoSlice.actions;
 
 export default todoSlice.reducer;
