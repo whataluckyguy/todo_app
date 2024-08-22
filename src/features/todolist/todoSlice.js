@@ -4,7 +4,7 @@ import axios from "axios";
 export const fetchTodoList = createAsyncThunk(
   "todo/fetchTodoList",
   async () => {
-    const response = await axios.get("https://dummyjson.com/todos");
+    const response = await axios.get("https://dummyjson.com/todos?limit=4");
     return response.data.todos;
   }
 );
