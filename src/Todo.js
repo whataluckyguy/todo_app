@@ -86,7 +86,7 @@ const Todo = ({ todo, todoID, check }) => {
               type="text"
               fullWidth
               variant="standard"
-              value={todo}
+              defaultValue={todo}
             />
           </DialogContent>
           <DialogActions>
